@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA SPHERES — 2 to 4 Player Cosmic Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stars-bg"></div>
+  <div class="glow-orb glow-top"></div>
+  <div class="glow-orb glow-bottom"></div>
+
+  <!-- ══════════ SCREEN 1: MAIN MENU ══════════ -->
+  <section class="screen-view" id="screen-menu">
+    <div class="menu-container">
+      <div class="menu-brand">
+        <div class="hero-logo-orb">
+          <div class="orb-ring-orbit"></div>
+          <div class="orb-core-gem">✦</div>
+        </div>
+        <h1 class="hero-title">AURA SPHERES</h1>
+        <p class="hero-subtitle">THE NEXT EVOLUTION IN GLOBAL BOARD STRATEGY</p>
+        <span class="hero-badge">PATENT PENDING INNOVATION • 2 – 4 PLAYERS</span>
+      </div>
+
+      <!-- PLAYER COUNT SELECTOR -->
+      <div class="player-count-section">
+        <h3 class="pcs-title">SELECT NUMBER OF PLAYERS</h3>
+        <div class="pcs-buttons">
+          <button class="pcs-btn active" data-count="2">
+            <span class="pcs-num">2</span>
+            <span class="pcs-label">PLAYERS</span>
+          </button>
+          <button class="pcs-btn" data-count="3">
+            <span class="pcs-num">3</span>
+            <span class="pcs-label">PLAYERS</span>
+          </button>
+          <button class="pcs-btn" data-count="4">
+            <span class="pcs-num">4</span>
+            <span class="pcs-label">PLAYERS</span>
+          </button>
+        </div>
+        <div class="pcs-preview" id="pcs-preview">
+          <div class="pcs-orb orb-p1-color" title="Player 1 – Sapphire"></div>
+          <div class="pcs-orb orb-p2-color" title="Player 2 – Ruby"></div>
+        </div>
+      </div>
+
+      <!-- GAME MODE -->
+      <div class="menu-options-card">
+        <button class="btn-hero-play" id="btn-menu-play-ai">
+          <span class="btn-icon">🤖</span>
+          <div class="btn-text-block">
+            <strong>VS ORACLE AI  <span class="ai-note" id="ai-note">(You vs 1 AI)</span></strong>
+            <small>Challenge the intelligent Oracle with cosmic precision</small>
+          </div>
+          <span class="btn-arrow">➔</span>
+        </button>
+
+        <button class="btn-hero-play btn-hero-pvp" id="btn-menu-play-pvp">
+          <span class="btn-icon">👥</span>
+          <div class="btn-text-block">
+            <strong>PASS & PLAY  <span class="ai-note" id="pvp-note">(2 Players Local)</span></strong>
+            <small>Pass the device and take turns — friends, family, rivals</small>
+          </div>
+          <span class="btn-arrow">➔</span>
+        </button>
+
+        <button class="btn-hero-play btn-hero-allai" id="btn-menu-play-allai">
+          <span class="btn-icon">🌌</span>
+          <div class="btn-text-block">
+            <strong>WATCH AI BATTLE  <span class="ai-note" id="allai-note">(All AI)</span></strong>
+            <small>Sit back and observe the Oracle factions war for the Solar Core</small>
+          </div>
+          <span class="btn-arrow">➔</span>
+        </button>
+
+        <div class="menu-sub-row">
+          <button class="btn-menu-sub" id="btn-menu-rules">📜 HOW TO PLAY</button>
+          <button class="btn-menu-sub" id="btn-menu-lore">🌌 THE LORE</button>
+        </div>
+      </div>
+
+      <div class="menu-footer">
+        <span>© 2026 AURA SPHERES INC. DESIGNED FOR WORLDWIDE ELEGANCE.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SCREEN 2: GAMEPLAY ══════════ -->
+  <section class="screen-view hidden" id="screen-game">
+    <header class="game-header">
+      <div class="brand" id="brand-home-trigger" title="Back to Menu">
+        <div class="logo-gem"></div>
+        <div>
+          <h2 class="logo-title">AURA SPHERES</h2>
+          <p class="logo-tagline">MASTER THE GRID • STEAL THE LIGHT</p>
+        </div>
+      </div>
+
+      <div class="turn-status-pill" id="turn-banner">
+        <span class="turn-dot" id="turn-dot"></span>
+        <span id="turn-instruction-text">Loading…</span>
+      </div>
+
+      <div class="header-controls">
+        <select id="select-token-skin" class="btn-luxury select-skin-btn" title="Piece Aesthetic Skin">
+          <option value="prism" selected>💎 Cyber Prisms</option>
+          <option value="rune">⚡ Neon Runes</option>
+          <option value="mecha">🛡️ Mecha Crests</option>
+          <option value="astral">🌌 Astral Glyphs</option>
+        </select>
+        <button id="btn-ingame-sound" class="btn-icon-control" title="Sound">🔊</button>
+        <button id="btn-ingame-rules" class="btn-luxury">📜 Rules</button>
+        <button id="btn-exit-to-menu" class="btn-luxury btn-danger">🏠 Menu</button>
+      </div>
+    </header>
+
+    <!-- GAME LAYOUT: panels wrap board -->
+    <div class="game-layout">
+
+      <!-- TOP ROW: P1 panel left, board center, P2 panel right -->
+      <div class="layout-top">
+
+        <!-- PLAYER PANELS (rendered dynamically via JS) -->
+        <div id="panels-top" class="panels-top"></div>
+
+        <!-- BOARD ARENA -->
+        <section class="board-arena">
+          <div class="action-hint-bar" id="action-hint">
+            👉 Click the <strong>Quantum Catalyst</strong> on your panel to roll!
+          </div>
+          <div class="board-wrapper">
+            <div class="grid-board" id="grid-board"></div>
+          </div>
+          <!-- Global shared dock -->
+          <div class="action-dock">
+            <div class="dice-box" id="dice-btn">
+              <div class="dice-cube" id="dice-cube">
+                <span class="dice-face-symbol" id="dice-face">🎲</span>
+              </div>
+              <div class="dice-meta">
+                <span class="dock-caption">ACTIVE CATALYST</span>
+                <strong class="dock-highlight" id="dice-action-desc">CLICK TO ROLL</strong>
+              </div>
+            </div>
+            <div class="dock-buttons">
+              <button id="btn-rescue" class="btn-dock-action" disabled>
+                🚀 Rescue (<span id="rescue-count">0</span>)
+              </button>
+              <button id="btn-skip-turn" class="btn-dock-action btn-skip" disabled>
+                Pass ⏭️
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div id="panels-right" class="panels-right"></div>
+      </div>
+
+      <!-- BOTTOM PANELS (P3, P4 if playing) -->
+      <div id="panels-bottom" class="panels-bottom"></div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ MODAL: RULES ══════════ -->
+  <div class="modal-overlay hidden" id="modal-rules">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>AURA SPHERES — Official Rulebook</h2>
+          <p class="modal-subtitle">2 to 4 Players • Luxury Strategy Redefined</p>
+        </div>
+        <button class="modal-close" id="btn-close-rules">&times;</button>
+      </div>
+      <div class="modal-body luxury-scroll">
+        <div class="pillars-grid">
+          <div class="pillar-box"><span class="p-icon">☀️</span><h4>Objective</h4><p>First player to escort <strong>2 Spheres into the Solar Core</strong> wins!</p></div>
+          <div class="pillar-box"><span class="p-icon">🎲</span><h4>Quantum Catalyst</h4><p>Roll <strong>1, 2, 3</strong> (steps) or powers: <strong>🔄 SWAP · ⚡ PULSE · 🛡️ SHIELD</strong></p></div>
+          <div class="pillar-box"><span class="p-icon">🌌</span><h4>Eclipse Banishment</h4><p>Land on any opponent's orb to send it to <strong>Starlight Orbit</strong>. It can be rescued.</p></div>
+          <div class="pillar-box"><span class="p-icon">✦</span><h4>Rune Cards</h4><p>Step on golden rune tiles to draw secret <strong>Aura Cards</strong> for massive advantages!</p></div>
+        </div>
+        <div class="guide-steps-list">
+          <h3>HOW YOUR TURN WORKS:</h3>
+          <ol>
+            <li><strong>Roll:</strong> Click YOUR personal Quantum Catalyst die on your player panel.</li>
+            <li><strong>Select:</strong> If you rolled 1-3, click a glowing sphere of yours.</li>
+            <li><strong>Move:</strong> Click any highlighted golden tile to move there.</li>
+            <li><strong>🔄 SWAP:</strong> Pick your orb → pick any opponent orb → instant position swap!</li>
+            <li><strong>⚡ PULSE:</strong> Auto shockwave knocks nearby enemy orbs back 2 tiles.</li>
+            <li><strong>🛡️ SHIELD:</strong> All your orbs become invincible until your next turn.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-luxury" id="btn-rules-start">Let's Play!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ MODAL: LORE ══════════ -->
+  <div class="modal-overlay hidden" id="modal-lore">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div><h2>The Celestial Genesis</h2><p class="modal-subtitle">Origins of the Lumina Grid and the Solar Core</p></div>
+        <button class="modal-close" id="btn-close-lore">&times;</button>
+      </div>
+      <div class="modal-body luxury-scroll">
+        <p style="font-size:14px;line-height:1.9;color:var(--text-dim)">
+          Before galaxies existed, four primordial architects fashioned the <strong>Lumina Grid</strong> — a perfect mathematical matrix of condensed starlight.
+          The <strong>Sapphire, Ruby, Emerald, and Obsidian</strong> factions were each given four celestial spheres
+          and tasked with guiding them to the <strong>Solar Core</strong> at the grid's heart to ignite a new star.<br><br>
+          They developed eclipse captures, pulse shockwaves, and dimensional swaps. Only the two most cunning tacticians
+          would see their orbs absorb into the Solar Core. <em>The war of light has never ended.</em>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-luxury" id="btn-close-lore-bottom">Return</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ MODAL: VICTORY ══════════ -->
+  <div class="modal-overlay hidden" id="modal-victory">
+    <div class="modal-card victory-card">
+      <div class="victory-trophy">👑</div>
+      <h2 id="victory-title">PLAYER 1 VICTORIOUS!</h2>
+      <p id="victory-desc">Two celestial spheres merged into the Solar Core. Cosmic supremacy achieved!</p>
+      <div class="victory-actions">
+        <button class="btn-luxury" id="btn-victory-rematch">Play Rematch</button>
+        <button class="btn-luxury btn-danger" id="btn-victory-menu">Return to Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
